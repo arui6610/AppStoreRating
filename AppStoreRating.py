@@ -196,7 +196,7 @@ def parser(appid,appname,zone):
                 }
                 payload = json.dumps(payload)
                 print(payload)
-                # 这里。。。。。。。。
+                # TODO
             page = page + 1
         else:
             break
@@ -218,15 +218,13 @@ def task(appid,appname):
             print(val,"失败",e,"\n\n")
         else:
             print(val,"结束","\n\n")
-
+    
 def timing(appid,appname):
     from apscheduler.schedulers.blocking import BlockingScheduler
-    scheduler = BlockingScheduler()
-    scheduler.add_job(task(appid,appname), 'interval', days=1, id='appstore_score')
-    scheduler.start()
+    sche = BlockingScheduler()
+    sche.add_job(task(appid,appname), 'cron', hour='12', minute='00', second='0')
+    sche.start()    
 
 
 if __name__ == '__main__':
-    appid = 414478124
-    appname = "微信"
-    task(appid,appname)
+    timing(414478124,"微信")
